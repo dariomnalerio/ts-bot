@@ -1,8 +1,10 @@
 import { Client } from "discord.js";
 import ICustomClient from "../interfaces/ICustomClient";
 import IConfig from "../interfaces/IConfig";
+import Handler from "./Handler";
 
 export default class CustomClient extends Client implements ICustomClient {
+  handler: Handler;
   config: IConfig;
 
 
@@ -11,10 +13,15 @@ export default class CustomClient extends Client implements ICustomClient {
       intents: [],
     });
     this.config = require(`${process.cwd()}/data/config.json`);
+    this.handler = new Handler(this);
+  }
+
+  LoadHandlers(): void {
+    this.handler.LoadEvents();
   }
 
   Init() {
-    this.login(this.config.token).then(() => { console.log("Logged in!") }).catch((err) => { console.error(err) });
+    this.LoadHandlers();
+    this.login(this.config.token).catch((err) => { console.error(err) });
   }
-
 }
