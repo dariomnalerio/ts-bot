@@ -25,6 +25,10 @@ export default class Ready extends Event {
         body: this.GetJson(this.client.commands.filter((command) => !command.dev)),
       });
 
+      for (const command of globalCommands) {
+        console.log(`Successfully loaded ${command.name} global command`);
+      }
+
       console.log(`Successfully loaded ${globalCommands.length} global commands`);
     }
 
