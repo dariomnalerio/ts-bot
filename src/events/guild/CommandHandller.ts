@@ -22,6 +22,15 @@ export default class CommandHandler extends Event {
       return interaction.reply({ content: "This command does not exist!", ephemeral: true });
     }
 
+    const isDev = this.client.config.devUserIds.includes(interaction.user.id);
+
+    if (command.dev && !isDev) {
+      return interaction.reply({
+        embeds: [new EmbedBuilder().setColor("Red").setDescription(`❌ This command is only available to developers.`)],
+        ephemeral: true,
+      });
+    }
+
     const { cooldowns } = this.client;
 
     if (!cooldowns.has(command.name)) {

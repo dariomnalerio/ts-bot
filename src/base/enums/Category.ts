@@ -1,5 +1,6 @@
 export const Category = {
-  Utilities: 'Utilities',
+  Utilities: "Utilities",
+  Developer: "Developer",
 } as const;
 
-export type CategoryEnumType = typeof Category[keyof typeof Category];
+export type CategoryEnumType = (typeof Category)[keyof typeof Category];
