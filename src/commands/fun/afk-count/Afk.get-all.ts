@@ -2,6 +2,7 @@ import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import CustomClient from "../../../base/classes/CustomClient";
 import SubCommand from "../../../base/classes/SubCommand";
 import AfkCount from "../../../base/schemas/AfkCount";
+import { getUser } from "../../../utils/utils";
 
 export default class AfkGetAll extends SubCommand {
   constructor(client: CustomClient) {
@@ -31,18 +32,18 @@ export default class AfkGetAll extends SubCommand {
         return;
       }
 
-      const embed = new EmbedBuilder()
-        .setColor("Green")
-        .setTitle("AFK Count")
-        .setDescription(
-          afkCounts
-            .sort((a, b) => b.count - a.count) // Sort by count in descending order
-            .map((afkCount, index) => {
-              const user = this.client.users.cache.get(afkCount.userId);
-              return `${index + 1}. ${user?.toString() ?? "Unknown User"}: ${afkCount.count}`;
-            })
-            .join("\n")
-        );
+      const embed = new EmbedBuilder().setColor("Green").setTitle("AFK Count");
+
+      const descriptions = await Promise.all(
+        afkCounts
+          .sort((a, b) => b.count - a.count)
+          .map(async (afkCount, index) => {
+            const user = await getUser(this.client, afkCount.userId);
+            return `${index + 1}. ${user}: ${afkCount.count}`;
+          })
+      );
+
+      embed.setDescription(descriptions.join("\n"));
 
       interaction.reply({
         embeds: [embed],
