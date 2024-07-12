@@ -2,7 +2,7 @@ import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import CustomClient from "../../../base/classes/CustomClient";
 import SubCommand from "../../../base/classes/SubCommand";
 import AfkCount from "../../../base/schemas/AfkCount";
-import { getUser } from "../../../utils/utils";
+import { getUser } from "../../../utils";
 
 export default class AfkGetAll extends SubCommand {
   constructor(client: CustomClient) {

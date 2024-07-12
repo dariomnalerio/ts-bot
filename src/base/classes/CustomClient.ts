@@ -4,7 +4,7 @@ import { IConfig } from "../interfaces/IConfig";
 import Handler from "./Handler";
 import Command from "./Command";
 import SubCommand from "./SubCommand";
-import { loadAndValidateConfig } from "../utils/validateConfig";
+import { loadAndValidateConfig } from "../../utils";
 import { connect } from "mongoose";
 
 export default class CustomClient extends Client implements ICustomClient {

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ConfigSchema } from "../interfaces/IConfig";
+import { ConfigSchema } from "../base/interfaces/IConfig";
 import fs from "fs";
 
 function readConfigFile(configPath: string): string {

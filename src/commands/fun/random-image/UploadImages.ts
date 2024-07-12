@@ -8,6 +8,7 @@ import Command from "../../../base/classes/Command";
 import CustomClient from "../../../base/classes/CustomClient";
 import { Category } from "../../../base/enums/Category";
 import RandomImage from "../../../base/schemas/RandomImage";
+import { checkImageURL } from "../../../utils";
 
 export default class UploadRandomImages extends Command {
   constructor(client: CustomClient) {
@@ -34,6 +35,14 @@ export default class UploadRandomImages extends Command {
     try {
       const imageUrls = interaction.options.getString("images", true);
       const imageUrlsArray = imageUrls.split(",").map((url) => ({ imageUrl: url.trim() }));
+
+      if (imageUrlsArray.some((image) => !checkImageURL(image.imageUrl))) {
+        interaction.reply({
+          embeds: [new EmbedBuilder().setDescription("❌ Invalid image URL(s) provided.")],
+          ephemeral: true,
+        });
+        return;
+      }
 
       await RandomImage.insertMany(imageUrlsArray);
 
