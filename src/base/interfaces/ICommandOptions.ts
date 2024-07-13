@@ -1,4 +1,4 @@
-import { CategoryEnumType as Category } from "../enums/Category";
+import { CategoryEnumType as Category } from '../enums/Category';
 
 export default interface ICommandOptions {
   name: string;

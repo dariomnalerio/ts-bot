@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
 interface IGuildConfig {
   guildId: string;
@@ -17,6 +17,6 @@ const guildConfigSchema = new Schema<IGuildConfig>({
   },
 });
 
-const GuildConfig = model<IGuildConfig>("GuildConfig", guildConfigSchema);
+const GuildConfig = model<IGuildConfig>('GuildConfig', guildConfigSchema);
 
 export default GuildConfig;

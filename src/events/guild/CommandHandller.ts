@@ -1,13 +1,13 @@
-import { ChatInputCommandInteraction, Collection, EmbedBuilder, Events } from "discord.js";
-import CustomClient from "../../base/classes/CustomClient";
-import Event from "../../base/classes/Event";
-import Command from "../../base/classes/Command";
+import { ChatInputCommandInteraction, Collection, EmbedBuilder, Events } from 'discord.js';
+import CustomClient from '../../base/classes/CustomClient';
+import Event from '../../base/classes/Event';
+import Command from '../../base/classes/Command';
 
 export default class CommandHandler extends Event {
   constructor(client: CustomClient) {
     super(client, {
       name: Events.InteractionCreate,
-      description: "Command handler event",
+      description: 'Command handler event',
       once: false,
     });
   }
@@ -19,14 +19,14 @@ export default class CommandHandler extends Event {
 
     if (!command) {
       this.client.commands.delete(interaction.commandName);
-      return interaction.reply({ content: "This command does not exist!", ephemeral: true });
+      return interaction.reply({ content: 'This command does not exist!', ephemeral: true });
     }
 
     const isDev = this.client.config.devUserIds.includes(interaction.user.id);
 
     if (command.dev && !isDev) {
       return interaction.reply({
-        embeds: [new EmbedBuilder().setColor("Red").setDescription(`❌ This command is only available to developers.`)],
+        embeds: [new EmbedBuilder().setColor('Red').setDescription(`❌ This command is only available to developers.`)],
         ephemeral: true,
       });
     }
@@ -47,9 +47,9 @@ export default class CommandHandler extends Event {
       return interaction.reply({
         embeds: [
           new EmbedBuilder()
-            .setColor("Red")
+            .setColor('Red')
             .setDescription(
-              `❌ Please wait ${timeLeft / 1000} more seconds before reusing the \`${command.name}\` command.`
+              `❌ Please wait ${timeLeft / 1000} more seconds before reusing the \`${command.name}\` command.`,
             ),
         ],
         ephemeral: true,
@@ -63,8 +63,8 @@ export default class CommandHandler extends Event {
 
     try {
       const subCommandGroup = interaction.options.getSubcommandGroup(false);
-      const subCommand = `${interaction.commandName}${subCommandGroup ? `.${subCommandGroup}` : ""}.${
-        interaction.options.getSubcommand(false) || ""
+      const subCommand = `${interaction.commandName}${subCommandGroup ? `.${subCommandGroup}` : ''}.${
+        interaction.options.getSubcommand(false) || ''
       }`;
 
       return this.client.subcommands.get(subCommand)?.Execute(interaction) || command.Execute(interaction);

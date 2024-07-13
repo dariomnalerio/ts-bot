@@ -1,7 +1,7 @@
-import { ChatInputCommandInteraction } from "discord.js";
-import ISubCommand from "../interfaces/ISubCommand";
-import CustomClient from "./CustomClient";
-import ISubCommandOptions from "../interfaces/ISubCommandOptions";
+import { ChatInputCommandInteraction } from 'discord.js';
+import ISubCommand from '../interfaces/ISubCommand';
+import CustomClient from './CustomClient';
+import ISubCommandOptions from '../interfaces/ISubCommandOptions';
 
 export default class SubCommand implements ISubCommand {
   client: CustomClient;
@@ -12,5 +12,5 @@ export default class SubCommand implements ISubCommand {
     this.name = options.name;
   }
 
-  Execute(interaction: ChatInputCommandInteraction): void { }
+  Execute(interaction: ChatInputCommandInteraction): void {}
 }

@@ -1,24 +1,24 @@
-import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
-import CustomClient from "../../../base/classes/CustomClient";
-import SubCommand from "../../../base/classes/SubCommand";
-import Quote from "../../../base/schemas/Quote";
-import GuildConfig from "../../../base/schemas/GuildConfig";
+import { ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
+import CustomClient from '../../../base/classes/CustomClient';
+import SubCommand from '../../../base/classes/SubCommand';
+import Quote from '../../../base/schemas/Quote';
+import GuildConfig from '../../../base/schemas/GuildConfig';
 
 export default class AddQuote extends SubCommand {
   constructor(client: CustomClient) {
     super(client, {
-      name: "quote.add",
+      name: 'quote.add',
     });
   }
 
   async Execute(interaction: ChatInputCommandInteraction): Promise<void> {
-    const quote = interaction.options.getString("quote", true);
-    const user = interaction.options.getUser("user");
+    const quote = interaction.options.getString('quote', true);
+    const user = interaction.options.getUser('user');
     const guildId = interaction.guild?.id;
 
     if (!guildId) {
       await interaction.reply({
-        embeds: [new EmbedBuilder().setColor("Red").setDescription("❌ Guild not found")],
+        embeds: [new EmbedBuilder().setColor('Red').setDescription('❌ Guild not found')],
         ephemeral: true,
       });
       return;
@@ -28,7 +28,7 @@ export default class AddQuote extends SubCommand {
 
     if (!settings) {
       await interaction.reply({
-        embeds: [new EmbedBuilder().setColor("Red").setDescription("❌ Quotes channel not set")],
+        embeds: [new EmbedBuilder().setColor('Red').setDescription('❌ Quotes channel not set')],
         ephemeral: true,
       });
       return;
@@ -44,19 +44,19 @@ export default class AddQuote extends SubCommand {
       await newQuote.save();
 
       await interaction.reply({
-        embeds: [new EmbedBuilder().setDescription("✅ Quote added successfully.")],
+        embeds: [new EmbedBuilder().setDescription('✅ Quote added successfully.')],
         ephemeral: true,
       });
 
       if (settings && settings.quotesChannelId) {
         const channel = interaction.guild?.channels.cache.get(settings.quotesChannelId);
         if (channel?.isTextBased()) {
-          const embed = new EmbedBuilder().setDescription(quote).setColor("Blue");
+          const embed = new EmbedBuilder().setDescription(quote).setColor('Blue');
 
           if (user) {
             embed.setThumbnail(user.displayAvatarURL());
             embed.addFields({
-              name: "-",
+              name: '-',
               value: user.toString(),
             });
           }
@@ -67,7 +67,7 @@ export default class AddQuote extends SubCommand {
     } catch (error: any) {
       console.error(error);
       await interaction.reply({
-        embeds: [new EmbedBuilder().setColor("Red").setDescription("❌ An error occurred while adding the quote.")],
+        embeds: [new EmbedBuilder().setColor('Red').setDescription('❌ An error occurred while adding the quote.')],
         ephemeral: true,
       });
     }

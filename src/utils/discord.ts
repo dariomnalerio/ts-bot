@@ -1,4 +1,4 @@
-import { Client, User } from "discord.js";
+import { Client, User } from 'discord.js';
 
 export async function getUser(client: Client, userId: string): Promise<User | null> {
   try {

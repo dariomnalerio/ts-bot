@@ -1,17 +1,17 @@
-import { z } from "zod";
-import { ConfigSchema } from "../base/interfaces/IConfig";
-import fs from "fs";
+import { z } from 'zod';
+import { ConfigSchema } from '../base/interfaces/IConfig';
+import fs from 'fs';
 
 function readConfigFile(configPath: string): string {
   try {
-    return fs.readFileSync(configPath, "utf-8");
+    return fs.readFileSync(configPath, 'utf-8');
   } catch (error) {
-    if (error instanceof Error && (error as NodeJS.ErrnoException).code === "ENOENT") {
+    if (error instanceof Error && (error as NodeJS.ErrnoException).code === 'ENOENT') {
       throw new Error(`Config file not found: ${(error as NodeJS.ErrnoException).message}`);
     } else if (error instanceof Error) {
       throw new Error(`An error occurred while reading the config file: ${error.message}`);
     } else {
-      throw new Error("An unknown error occurred while reading the config file.");
+      throw new Error('An unknown error occurred while reading the config file.');
     }
   }
 }
@@ -25,7 +25,7 @@ function parseConfigFile(configFile: string): unknown {
     } else if (error instanceof Error) {
       throw new Error(`An error occurred while parsing the config file: ${error.message}`);
     } else {
-      throw new Error("An unknown error occurred while parsing the config file.");
+      throw new Error('An unknown error occurred while parsing the config file.');
     }
   }
 }
@@ -39,7 +39,7 @@ function validateConfig(configJson: unknown): z.infer<typeof ConfigSchema> {
     } else if (error instanceof Error) {
       throw new Error(`An error occurred during configuration validation: ${error.message}`);
     } else {
-      throw new Error("An unknown error occurred during configuration validation.");
+      throw new Error('An unknown error occurred during configuration validation.');
     }
   }
 }
@@ -53,7 +53,7 @@ export function loadAndValidateConfig(configPath: string): z.infer<typeof Config
     if (error instanceof Error) {
       console.error(error.message);
     } else {
-      console.error("An unknown error occurred.");
+      console.error('An unknown error occurred.');
     }
     process.exit(1);
   }

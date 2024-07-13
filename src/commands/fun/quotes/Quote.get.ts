@@ -1,22 +1,22 @@
-import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
-import SubCommand from "../../../base/classes/SubCommand";
-import Quote from "../../../base/schemas/Quote";
-import CustomClient from "../../../base/classes/CustomClient";
+import { ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
+import SubCommand from '../../../base/classes/SubCommand';
+import Quote from '../../../base/schemas/Quote';
+import CustomClient from '../../../base/classes/CustomClient';
 
 export default class GetRandomQuote extends SubCommand {
   constructor(client: CustomClient) {
     super(client, {
-      name: "quote.random",
+      name: 'quote.random',
     });
   }
 
   async Execute(interaction: ChatInputCommandInteraction): Promise<void> {
-    const user = interaction.options.getUser("user");
+    const user = interaction.options.getUser('user');
     const guildId = interaction.guild?.id;
 
     if (!guildId) {
       interaction.reply({
-        embeds: [new EmbedBuilder().setColor("Red").setDescription("❌ Guild not found")],
+        embeds: [new EmbedBuilder().setColor('Red').setDescription('❌ Guild not found')],
         ephemeral: true,
       });
       return;
@@ -28,7 +28,7 @@ export default class GetRandomQuote extends SubCommand {
 
       if (quotes.length === 0) {
         interaction.reply({
-          embeds: [new EmbedBuilder().setDescription("❌ No quotes found.")],
+          embeds: [new EmbedBuilder().setDescription('❌ No quotes found.')],
           ephemeral: true,
         });
         return;
@@ -36,14 +36,14 @@ export default class GetRandomQuote extends SubCommand {
 
       const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
-      const embed = new EmbedBuilder().setDescription(randomQuote.quote).setColor("Blue");
+      const embed = new EmbedBuilder().setDescription(randomQuote.quote).setColor('Blue');
 
       if (randomQuote.userId) {
         const quotedUser = interaction.guild?.members.cache.get(randomQuote.userId)?.user;
         if (quotedUser) {
           embed.setThumbnail(quotedUser.displayAvatarURL());
           embed.addFields({
-            name: "-",
+            name: '-',
             value: quotedUser.toString(),
           });
         }
@@ -53,7 +53,7 @@ export default class GetRandomQuote extends SubCommand {
     } catch (error: any) {
       console.error(error);
       interaction.reply({
-        embeds: [new EmbedBuilder().setDescription("❌ An error occurred while fetching the quote.")],
+        embeds: [new EmbedBuilder().setDescription('❌ An error occurred while fetching the quote.')],
         ephemeral: true,
       });
     }

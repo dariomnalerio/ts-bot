@@ -1,14 +1,14 @@
-import { ChatInputCommandInteraction, EmbedBuilder, PermissionsBitField } from "discord.js";
-import Command from "../../../base/classes/Command";
-import CustomClient from "../../../base/classes/CustomClient";
-import { Category } from "../../../base/enums/Category";
-import Quote from "../../../base/schemas/Quote";
+import { ChatInputCommandInteraction, EmbedBuilder, PermissionsBitField } from 'discord.js';
+import Command from '../../../base/classes/Command';
+import CustomClient from '../../../base/classes/CustomClient';
+import { Category } from '../../../base/enums/Category';
+import Quote from '../../../base/schemas/Quote';
 
 export default class ListQuotes extends Command {
   constructor(client: CustomClient) {
     super(client, {
-      name: "quote-list",
-      description: "List all quotes with indexes",
+      name: 'quote-list',
+      description: 'List all quotes with indexes',
       category: Category.Utilities,
       cooldown: 3,
       dev: false,
@@ -23,7 +23,7 @@ export default class ListQuotes extends Command {
 
     if (!guildId) {
       await interaction.reply({
-        embeds: [new EmbedBuilder().setColor("Red").setDescription("❌ Guild not found")],
+        embeds: [new EmbedBuilder().setColor('Red').setDescription('❌ Guild not found')],
         ephemeral: true,
       });
       return;
@@ -34,15 +34,15 @@ export default class ListQuotes extends Command {
 
       if (quotes.length === 0) {
         await interaction.reply({
-          embeds: [new EmbedBuilder().setColor("Red").setDescription("❌ No quotes found")],
+          embeds: [new EmbedBuilder().setColor('Red').setDescription('❌ No quotes found')],
           ephemeral: true,
         });
         return;
       }
 
       const quoteList = quotes
-        .map((quote, index: number) => `${index + 1}. ${quote.quote} - ${quote.userId ? `<@${quote.userId}>` : ""}`)
-        .join("\n");
+        .map((quote, index: number) => `${index + 1}. ${quote.quote} - ${quote.userId ? `<@${quote.userId}>` : ''}`)
+        .join('\n');
 
       await interaction.reply({
         embeds: [new EmbedBuilder().setDescription(quoteList)],
@@ -51,7 +51,7 @@ export default class ListQuotes extends Command {
     } catch (error: any) {
       console.error(error);
       await interaction.reply({
-        embeds: [new EmbedBuilder().setColor("Red").setDescription("❌ An error occurred while fetching the quotes.")],
+        embeds: [new EmbedBuilder().setColor('Red').setDescription('❌ An error occurred while fetching the quotes.')],
         ephemeral: true,
       });
     }

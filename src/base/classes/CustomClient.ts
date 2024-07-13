@@ -1,11 +1,11 @@
-import { Client, Collection, GatewayIntentBits } from "discord.js";
-import ICustomClient from "../interfaces/ICustomClient";
-import { IConfig } from "../interfaces/IConfig";
-import Handler from "./Handler";
-import Command from "./Command";
-import SubCommand from "./SubCommand";
-import { loadAndValidateConfig } from "../../utils";
-import { connect } from "mongoose";
+import { Client, Collection, GatewayIntentBits } from 'discord.js';
+import ICustomClient from '../interfaces/ICustomClient';
+import { IConfig } from '../interfaces/IConfig';
+import Handler from './Handler';
+import Command from './Command';
+import SubCommand from './SubCommand';
+import { loadAndValidateConfig } from '../../utils';
+import { connect } from 'mongoose';
 
 export default class CustomClient extends Client implements ICustomClient {
   handler: Handler;
@@ -25,7 +25,7 @@ export default class CustomClient extends Client implements ICustomClient {
     this.commands = new Collection();
     this.subcommands = new Collection();
     this.cooldowns = new Collection();
-    this.developmentMode = process.argv.slice(2).includes("--dev");
+    this.developmentMode = process.argv.slice(2).includes('--dev');
   }
 
   LoadHandlers(): void {
@@ -34,7 +34,7 @@ export default class CustomClient extends Client implements ICustomClient {
   }
 
   Init() {
-    console.log(`Starting the bot in ${this.developmentMode ? "development" : "production"} mode...`);
+    console.log(`Starting the bot in ${this.developmentMode ? 'development' : 'production'} mode...`);
     this.LoadHandlers();
     this.login(this.developmentMode ? this.config.devToken : this.config.token).catch((err) => {
       console.error(err);
@@ -42,7 +42,7 @@ export default class CustomClient extends Client implements ICustomClient {
 
     connect(this.developmentMode ? this.config.devMongoUrl : this.config.mongoUrl)
       .then(() => {
-        console.log("Connected to MongoDB!");
+        console.log('Connected to MongoDB!');
       })
       .catch((err) => {
         console.error(err);

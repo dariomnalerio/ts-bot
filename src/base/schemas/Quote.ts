@@ -15,7 +15,7 @@ const quoteSchema = new Schema<IQuote>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const Quote = model<IQuote>('Quote', quoteSchema);

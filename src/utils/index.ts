@@ -1,3 +1,3 @@
-export * from "./discord";
-export * from "./validateConfig";
-export * from "./misc";
+export * from './discord';
+export * from './validateConfig';
+export * from './misc';
